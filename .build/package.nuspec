@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package >
+	<metadata>
+		<id>shuttle-esb-unity</id>
+		<version>{semver}</version>
+		<authors>Eben Roux</authors>
+		<owners>Eben Roux</owners>
+		<licenseUrl>https://github.com/shuttle/shuttle-esb-unity/raw/master/LICENSE</licenseUrl>
+		<projectUrl>https://github.com/shuttle/shuttle-esb-unity</projectUrl>
+		<iconUrl>https://raw.githubusercontent.com/Shuttle/shuttle-esb-unity/master/.media/logo.png</iconUrl>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<description>UnityContainer implementation of the `IMessageHandlerFactory` for use with shuttle-esb.</description>
+		<releaseNotes/>
+		<copyright>Copyright (c) 2011-{year}, Eben Roux</copyright>
+		<tags>shuttle shuttle-esb unity</tags>
+		<dependencies>
+			<dependency id="Unity" version="{Unity-version}" />
+			<dependency id="shuttle-esb-core" version="{shuttle-esb-core-version}" />
+		</dependencies>
+	</metadata>
+</package>
