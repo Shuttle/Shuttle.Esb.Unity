@@ -11,7 +11,7 @@
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
 		<description>UnityContainer implementation of the `IMessageHandlerFactory` for use with shuttle-esb.</description>
 		<releaseNotes/>
-		<copyright>Copyright (c) 2011-{year}, Eben Roux</copyright>
+		<copyright>Copyright (c) {year}, Eben Roux</copyright>
 		<tags>shuttle shuttle-esb unity</tags>
 		<dependencies>
 			<dependency id="Unity" version="{Unity-version}" />
