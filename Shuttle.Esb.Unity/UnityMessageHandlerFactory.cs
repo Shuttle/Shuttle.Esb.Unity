@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Reflection;
 using Microsoft.Practices.Unity;
 using Shuttle.Core.Infrastructure;
-using Shuttle.ESB.Core;
+using Shuttle.Esb;
 
-namespace Shuttle.ESB.Unity
+namespace Shuttle.Esb.Unity
 {
 	public class UnityMessageHandlerFactory : MessageHandlerFactory
 	{

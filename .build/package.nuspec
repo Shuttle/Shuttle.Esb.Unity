@@ -1,21 +1,21 @@
 <?xml version="1.0"?>
 <package >
 	<metadata>
-		<id>shuttle-esb-unity</id>
+		<id>Shuttle.Esb.Unity</id>
 		<version>{semver}</version>
 		<authors>Eben Roux</authors>
 		<owners>Eben Roux</owners>
-		<licenseUrl>https://github.com/shuttle/shuttle-esb-unity/raw/master/LICENSE</licenseUrl>
-		<projectUrl>https://github.com/shuttle/shuttle-esb-unity</projectUrl>
-		<iconUrl>https://raw.githubusercontent.com/Shuttle/shuttle-esb-unity/master/.media/logo.png</iconUrl>
+		<licenseUrl>https://github.com/shuttle/Shuttle.Esb.Unity/raw/master/LICENSE</licenseUrl>
+		<projectUrl>https://github.com/shuttle/Shuttle.Esb.Unity</projectUrl>
+		<iconUrl>https://raw.githubusercontent.com/Shuttle/Shuttle.Esb.Unity/master/.media/logo.png</iconUrl>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
-		<description>UnityContainer implementation of the `IMessageHandlerFactory` for use with shuttle-esb.</description>
+		<description>UnityContainer implementation of the `IMessageHandlerFactory` for use with Shuttle.Esb.</description>
 		<releaseNotes/>
 		<copyright>Copyright (c) {year}, Eben Roux</copyright>
-		<tags>shuttle shuttle-esb unity</tags>
+		<tags>shuttle shuttle-esb shuttle-esb-unity unity</tags>
 		<dependencies>
 			<dependency id="Unity" version="{Unity-version}" />
-			<dependency id="shuttle-esb-core" version="{shuttle-esb-core-version}" />
+			<dependency id="Shuttle.Esb" version="{Shuttle.Esb-version}" />
 		</dependencies>
 	</metadata>
 </package>
