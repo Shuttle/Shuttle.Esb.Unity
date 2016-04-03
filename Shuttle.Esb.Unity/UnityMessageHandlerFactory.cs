@@ -59,7 +59,7 @@ namespace Shuttle.Esb.Unity
 
 					_messageHandlerTypes.Add(messageType, containerRegistration.MappedToType);
 
-					_log.Information(string.Format(ESBResources.MessageHandlerFactoryHandlerRegistered, messageType.FullName, containerRegistration.MappedToType.FullName));
+					_log.Information(string.Format(EsbResources.MessageHandlerFactoryHandlerRegistered, messageType.FullName, containerRegistration.MappedToType.FullName));
 				}
 			}
 		}

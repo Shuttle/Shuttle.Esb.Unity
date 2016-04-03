@@ -25,10 +25,10 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Shuttle.Esb.Unity for .NET Framework 4.6.1")]
 #endif
 
-[assembly: AssemblyVersion("1.5.6.0")]
+[assembly: AssemblyVersion("1.5.8.0")]
 [assembly: AssemblyCopyright("Copyright © Eben Roux 2016")]
 [assembly: AssemblyProduct("Shuttle.Esb")]
 [assembly: AssemblyCompany("Shuttle")]
 [assembly: AssemblyConfiguration("Release")]
-[assembly: AssemblyInformationalVersion("1.5.6")]
+[assembly: AssemblyInformationalVersion("1.5.8")]
 [assembly: ComVisible(false)]
