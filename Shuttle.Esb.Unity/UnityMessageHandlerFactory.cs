@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Reflection;
 using Microsoft.Practices.Unity;
 using Shuttle.Core.Infrastructure;
-using Shuttle.Esb;
 
 namespace Shuttle.Esb.Unity
 {
@@ -59,7 +58,8 @@ namespace Shuttle.Esb.Unity
 
 					_messageHandlerTypes.Add(messageType, containerRegistration.MappedToType);
 
-					_log.Information(string.Format(EsbResources.MessageHandlerFactoryHandlerRegistered, messageType.FullName, containerRegistration.MappedToType.FullName));
+					_log.Information(string.Format(EsbResources.MessageHandlerFactoryHandlerRegistered, messageType.FullName,
+						containerRegistration.MappedToType.FullName));
 				}
 			}
 		}
