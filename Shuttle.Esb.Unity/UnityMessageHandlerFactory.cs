@@ -9,8 +9,8 @@ namespace Shuttle.Esb.Unity
 	public class UnityMessageHandlerFactory : MessageHandlerFactory
 	{
 		private readonly IUnityContainer _container;
-		private static readonly Type _generic = typeof (IMessageHandler<>);
-		private static readonly InjectionMember[] _emptyInjectionMembers = {};
+		private static readonly Type Generic = typeof (IMessageHandler<>);
+		private static readonly InjectionMember[] EmptyInjectionMembers = {};
 		private readonly Dictionary<Type, Type> _messageHandlerTypes = new Dictionary<Type, Type>();
 		private readonly ILog _log;
 
@@ -25,7 +25,7 @@ namespace Shuttle.Esb.Unity
 
 		public override IMessageHandler CreateHandler(object message)
 		{
-			return (IMessageHandler) _container.Resolve(_generic.MakeGenericType(message.GetType()));
+			return (IMessageHandler) _container.Resolve(Generic.MakeGenericType(message.GetType()));
 		}
 
 		public override IEnumerable<Type> MessageTypesHandled
@@ -47,7 +47,7 @@ namespace Shuttle.Esb.Unity
 			foreach (var containerRegistration in _container.Registrations)
 			{
 				if (containerRegistration.RegisteredType.IsGenericType &&
-				    containerRegistration.RegisteredType.GetGenericTypeDefinition() == _generic)
+				    containerRegistration.RegisteredType.GetGenericTypeDefinition() == Generic)
 				{
 					var messageType = containerRegistration.RegisteredType.GetGenericArguments()[0];
 
@@ -64,25 +64,15 @@ namespace Shuttle.Esb.Unity
 			}
 		}
 
-		public UnityMessageHandlerFactory RegisterHandlers()
-		{
-			foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
-			{
-				RegisterHandlers(assembly);
-			}
-
-			return this;
-		}
-
-		public UnityMessageHandlerFactory RegisterHandlers(Assembly assembly)
+		public override IMessageHandlerFactory RegisterHandlers(Assembly assembly)
 		{
 			foreach (var type in new ReflectionService().GetTypes(typeof (IMessageHandler<>), assembly))
 			{
-				var handlerInterfaces = type.InterfacesAssignableTo(_generic);
+				var handlerInterfaces = type.InterfacesAssignableTo(Generic);
 
 				foreach (var handlerInterface in handlerInterfaces)
 				{
-					_container.RegisterType(handlerInterface, type, new ContainerControlledLifetimeManager(), _emptyInjectionMembers);
+					_container.RegisterType(handlerInterface, type, new ContainerControlledLifetimeManager(), EmptyInjectionMembers);
 				}
 			}
 
