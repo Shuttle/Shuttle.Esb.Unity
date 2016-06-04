@@ -6,7 +6,7 @@ using Shuttle.Core.Infrastructure;
 
 namespace Shuttle.Esb.Unity
 {
-	public class UnityMessageHandlerFactory : MessageHandlerFactory
+	public class UnityMessageHandlerFactory : MessageHandlerFactory, IRequireInitialization
 	{
 		private readonly IUnityContainer _container;
 		private static readonly Type Generic = typeof (IMessageHandler<>);
@@ -33,11 +33,11 @@ namespace Shuttle.Esb.Unity
 			get { return _messageHandlerTypes.Keys; }
 		}
 
-		public override void Initialize(IServiceBus bus)
+		public void Initialize(IServiceBus bus)
 		{
 			Guard.AgainstNull(bus, "bus");
 
-			_messageHandlerTypes.Clear();
+		    _container.RegisterInstance(bus);
 
 			RefreshHandledTypes();
 		}
