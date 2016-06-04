@@ -1,11 +1,6 @@
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-#if NET40FULL
-
-[assembly: AssemblyTitle("Shuttle.Esb.Unity for .NET Framework 4.0")]
-#endif
-
 #if NET45FULL
 [assembly: AssemblyTitle("Shuttle.Esb.Unity for .NET Framework 4.5")]
 #endif
