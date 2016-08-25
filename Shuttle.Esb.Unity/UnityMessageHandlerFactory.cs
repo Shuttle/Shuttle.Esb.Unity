@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Microsoft.Practices.Unity;
 using Shuttle.Core.Infrastructure;
@@ -9,10 +10,11 @@ namespace Shuttle.Esb.Unity
     public class UnityMessageHandlerFactory : MessageHandlerFactory, IRequireInitialization
     {
         private readonly IUnityContainer _container;
-        private static readonly Type Generic = typeof(IMessageHandler<>);
-        private static readonly InjectionMember[] EmptyInjectionMembers = { };
-        private readonly Dictionary<Type, Type> _messageHandlerTypes = new Dictionary<Type, Type>();
+        private static readonly Type MessageHandlerType = typeof(IMessageHandler<>);
         private readonly ILog _log;
+        private readonly Dictionary<Type, Type> _messageHandlerTypes = new Dictionary<Type, Type>();
+        private readonly ReflectionService _reflectionService = new ReflectionService();
+        private static readonly InjectionMember[] EmptyInjectionMembers = { };
 
         public UnityMessageHandlerFactory(IUnityContainer container)
         {
@@ -25,7 +27,7 @@ namespace Shuttle.Esb.Unity
 
         public override IMessageHandler CreateHandler(object message)
         {
-            return (IMessageHandler)_container.Resolve(Generic.MakeGenericType(message.GetType()));
+            return (IMessageHandler)_container.Resolve(MessageHandlerType.MakeGenericType(message.GetType()));
         }
 
         public override IEnumerable<Type> MessageTypesHandled
@@ -37,30 +39,8 @@ namespace Shuttle.Esb.Unity
         {
             Guard.AgainstNull(bus, "bus");
 
-            _container.RegisterInstance(bus);
-
-            RefreshHandledTypes();
-        }
-
-        private void RefreshHandledTypes()
-        {
-            foreach (var containerRegistration in _container.Registrations)
-            {
-                if (containerRegistration.RegisteredType.IsGenericType &&
-                    containerRegistration.RegisteredType.GetGenericTypeDefinition() == Generic)
-                {
-                    var messageType = containerRegistration.RegisteredType.GetGenericArguments()[0];
-
-                    if (_messageHandlerTypes.ContainsKey(messageType))
-                    {
-                        return;
-                    }
-
-                    _messageHandlerTypes.Add(messageType, containerRegistration.MappedToType);
-
-                    _log.Information(string.Format(EsbResources.MessageHandlerFactoryHandlerRegistered, messageType.FullName,
-                        containerRegistration.MappedToType.FullName));
-                }
+            if (_container.Registrations.FirstOrDefault(item => item.RegisteredType == typeof(IServiceBus)) == null) {
+                _container.RegisterInstance(bus);
             }
         }
 
@@ -68,13 +48,22 @@ namespace Shuttle.Esb.Unity
         {
             try
             {
-                foreach (var type in new ReflectionService().GetTypes(typeof(IMessageHandler<>), assembly))
+                foreach (var type in _reflectionService.GetTypes(MessageHandlerType, assembly))
                 {
-                    var handlerInterfaces = type.InterfacesAssignableTo(Generic);
-
-                    foreach (var handlerInterface in handlerInterfaces)
+                    foreach (var @interface in type.GetInterfaces())
                     {
-                        _container.RegisterType(handlerInterface, type, new ContainerControlledLifetimeManager(), EmptyInjectionMembers);
+                        var messageType = @interface.GetGenericArguments()[0];
+
+                        if (!_messageHandlerTypes.ContainsKey(messageType))
+                        {
+                            _messageHandlerTypes.Add(messageType, type);
+                        }
+                        else
+                        {
+                            _log.Warning(string.Format(UnityResources.DuplicateMessageHandlerIgnored, _messageHandlerTypes[messageType].FullName, messageType.FullName, type.FullName));
+                        }
+
+                        _container.RegisterType(MessageHandlerType.MakeGenericType(messageType), type, new ContainerControlledLifetimeManager(), EmptyInjectionMembers);
                     }
                 }
             }
@@ -83,8 +72,6 @@ namespace Shuttle.Esb.Unity
                 _log.Warning(string.Format(EsbResources.RegisterHandlersException, assembly.FullName,
                     ex.AllMessages()));
             }
-
-            RefreshHandledTypes();
 
             return this;
         }
