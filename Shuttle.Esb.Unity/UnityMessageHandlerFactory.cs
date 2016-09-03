@@ -25,9 +25,37 @@ namespace Shuttle.Esb.Unity
             _log = Log.For(this);
         }
 
-        public override IMessageHandler CreateHandler(object message)
+        public override object CreateHandler(object message)
         {
-            return (IMessageHandler)_container.Resolve(MessageHandlerType.MakeGenericType(message.GetType()));
+            return _container.Resolve(MessageHandlerType.MakeGenericType(message.GetType()));
+        }
+
+        public override IMessageHandlerFactory RegisterHandler(Type type)
+        {
+            Guard.AgainstNull(type, "type");
+
+            foreach (var @interface in type.GetInterfaces())
+            {
+                if (!@interface.IsAssignableTo(MessageHandlerType))
+                {
+                    continue;
+                }
+
+                var messageType = @interface.GetGenericArguments()[0];
+
+                if (!_messageHandlerTypes.ContainsKey(messageType))
+                {
+                    _messageHandlerTypes.Add(messageType, type);
+                }
+                else
+                {
+                    throw new InvalidOperationException(string.Format(UnityResources.DuplicateMessageHandlerIgnored, _messageHandlerTypes[messageType].FullName, messageType.FullName, type.FullName));
+                }
+
+                _container.RegisterType(MessageHandlerType.MakeGenericType(messageType), type, new ContainerControlledLifetimeManager(), EmptyInjectionMembers);
+            }
+
+            return this;
         }
 
         public override IEnumerable<Type> MessageTypesHandled
@@ -50,32 +78,15 @@ namespace Shuttle.Esb.Unity
             {
                 foreach (var type in _reflectionService.GetTypes(MessageHandlerType, assembly))
                 {
-                    foreach (var @interface in type.GetInterfaces())
-                    {
-                        if (!@interface.IsAssignableTo(MessageHandlerType))
-                        {
-                            continue;
-                        }
-
-                        var messageType = @interface.GetGenericArguments()[0];
-
-                        if (!_messageHandlerTypes.ContainsKey(messageType))
-                        {
-                            _messageHandlerTypes.Add(messageType, type);
-                        }
-                        else
-                        {
-                            _log.Warning(string.Format(UnityResources.DuplicateMessageHandlerIgnored, _messageHandlerTypes[messageType].FullName, messageType.FullName, type.FullName));
-                        }
-
-                        _container.RegisterType(MessageHandlerType.MakeGenericType(messageType), type, new ContainerControlledLifetimeManager(), EmptyInjectionMembers);
-                    }
+                    RegisterHandler(type);
                 }
             }
             catch (Exception ex)
             {
-                _log.Warning(string.Format(EsbResources.RegisterHandlersException, assembly.FullName,
+                _log.Fatal(string.Format(EsbResources.RegisterHandlersException, assembly.FullName,
                     ex.AllMessages()));
+
+                throw;
             }
 
             return this;

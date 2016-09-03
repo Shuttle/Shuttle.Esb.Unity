@@ -58,8 +58,8 @@
       <HintPath>..\packages\NUnit.3.4.1\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Shuttle.Core.Infrastructure, Version=4.2.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Shuttle.Core.Infrastructure.4.2.2\lib\net452-full\Shuttle.Core.Infrastructure.dll</HintPath>
+    <Reference Include="Shuttle.Core.Infrastructure, Version=4.2.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Shuttle.Core.Infrastructure.4.2.4\lib\net452-full\Shuttle.Core.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Shuttle.Esb, Version=6.2.1.0, Culture=neutral, processorArchitecture=MSIL">
@@ -77,7 +77,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="SimpleMessageHandler.cs" />
-    <Compile Include="AnotherSimpleMessageHandler.cs" />
     <Compile Include="SimpleCommand.cs" />
     <Compile Include="SimpleEvent.cs" />
     <Compile Include="UnitMessageHandlerFactoryFaxture.cs" />
@@ -87,6 +86,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Shuttle.Esb.Unity.Tests.Duplicate\Shuttle.Esb.Unity.Tests.Duplicate.csproj">
+      <Project>{75F43292-52C8-4902-93F2-094DFF2C9A12}</Project>
+      <Name>Shuttle.Esb.Unity.Tests.Duplicate</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Shuttle.Esb.Unity\Shuttle.Esb.Unity.csproj">
       <Project>{2DC084D8-25DC-431D-8F76-C79AC493BE89}</Project>
       <Name>Shuttle.Esb.Unity</Name>

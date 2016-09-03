@@ -26,6 +26,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".build", ".build", "{CA21DB
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shuttle.Esb.Unity.Tests", "Shuttle.Esb.Unity.Tests\Shuttle.Esb.Unity.Tests.csproj", "{00E4E1FB-37BE-45B0-8E48-0B3060DB9B1C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shuttle.Esb.Unity.Tests.Duplicate", "Shuttle.Esb.Unity.Tests.Duplicate\Shuttle.Esb.Unity.Tests.Duplicate.csproj", "{75F43292-52C8-4902-93F2-094DFF2C9A12}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +42,10 @@ Global
 		{00E4E1FB-37BE-45B0-8E48-0B3060DB9B1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{00E4E1FB-37BE-45B0-8E48-0B3060DB9B1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{00E4E1FB-37BE-45B0-8E48-0B3060DB9B1C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75F43292-52C8-4902-93F2-094DFF2C9A12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75F43292-52C8-4902-93F2-094DFF2C9A12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75F43292-52C8-4902-93F2-094DFF2C9A12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75F43292-52C8-4902-93F2-094DFF2C9A12}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
