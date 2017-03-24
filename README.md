@@ -1,5 +1,6 @@
-Shuttle.Esb.Unity
-=================
+> ***Please note:*** From v8.0.0 this package has been superceded by [Shuttle.Core.Unity](https://github.com/Shuttle/Shuttle.Core.Unity).
+
+# Shuttle.Esb.Unity
 
 `UnityContainer` implementation of the `IMessageHandlerFactory` for use with Shuttle.Esb.
 
